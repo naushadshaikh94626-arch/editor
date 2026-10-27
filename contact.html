@@ -1,0 +1,764 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Me | Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --black: #050505;
+      --gray: #999;
+      --line: #bdbdbd;
+      --white: #fff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", Arial, sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* LEFT SIDEBAR */
+
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 146px;
+      border-right: 1px solid #e5e5e5;
+      background: #fff;
+      z-index: 10;
+      padding: 42px 20px;
+    }
+
+    .back-button {
+      width: 46px;
+      height: 46px;
+      background: var(--black);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 25px;
+      cursor: pointer;
+      transition: transform .25s;
+    }
+
+    .back-button:hover {
+      transform: translateX(-4px);
+    }
+
+    .side-links {
+      margin-top: 68px;
+      display: flex;
+      flex-direction: column;
+      gap: 34px;
+    }
+
+    .side-links a {
+      color: #888;
+      font-size: 13px;
+      font-weight: 500;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .side-links a::after {
+      content: "";
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: #aaa;
+      margin-top: 22px;
+    }
+
+    .side-links a.active {
+      color: #000;
+      font-weight: 700;
+    }
+
+    .side-links a.active::before {
+      content: "";
+      position: absolute;
+      left: -19px;
+      top: 4px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #000;
+    }
+
+    /* MAIN LAYOUT */
+
+    .page {
+      margin-left: 146px;
+      padding: 55px 4.5% 30px;
+      min-height: 100vh;
+    }
+
+    .hero-title {
+      font-size: clamp(76px, 12.2vw, 180px);
+      font-weight: 800;
+      letter-spacing: -0.095em;
+      line-height: .95;
+      white-space: nowrap;
+      margin: 12px 0 45px;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 9%;
+      align-items: start;
+    }
+
+    /* OFFICE HOURS */
+
+    .office-info {
+      padding-top: 80px;
+    }
+
+    .small-label {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .office-time {
+      font-size: clamp(24px, 2.5vw, 36px);
+      line-height: 1.4;
+      font-weight: 400;
+      letter-spacing: -1.5px;
+    }
+
+    .office-divider {
+      height: 1px;
+      background: var(--line);
+      margin-top: 28px;
+      width: 100%;
+    }
+
+    /* CONTACT FORM */
+
+    .contact-form {
+      width: 100%;
+    }
+
+    .field {
+      margin-bottom: 23px;
+    }
+
+    .field label,
+    .field-title {
+      display: block;
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .name-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+    }
+
+    .name-grid label {
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .contact-form input:not([type="radio"]),
+    .contact-form select,
+    .contact-form textarea {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid #999;
+      outline: none;
+      border-radius: 0;
+      background: transparent;
+      padding: 0 0 12px;
+      font-size: 14px;
+      color: #111;
+      transition: border-color .25s;
+    }
+
+    .contact-form input:focus,
+    .contact-form select:focus,
+    .contact-form textarea:focus {
+      border-bottom-color: #000;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: #aaa;
+    }
+
+    .contact-form select {
+      appearance: none;
+      cursor: pointer;
+      color: #999;
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+        no-repeat right 4px center;
+    }
+
+    .contact-form select:valid {
+      color: #111;
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 68px;
+      line-height: 1.6;
+    }
+
+    /* RADIO OPTIONS */
+
+    .consent-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 5px 0 24px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      cursor: pointer;
+    }
+
+    .radio-option input[type="radio"] {
+      appearance: none;
+      flex: 0 0 21px;
+      width: 21px;
+      height: 21px;
+      border: 1px solid #777;
+      border-radius: 50%;
+      margin: 0;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .radio-option input[type="radio"]:checked::after {
+      content: "";
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #000;
+    }
+
+    .privacy-link {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* SUBMIT BUTTON + ARROW */
+
+    .submit-row {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin-top: 5px;
+    }
+
+    .submit-arrow {
+      width: 84px;
+      height: 50px;
+      flex-shrink: 0;
+      overflow: visible;
+    }
+
+    .submit-button {
+      min-width: 160px;
+      padding: 16px 28px;
+      border: none;
+      border-radius: 50px;
+      color: white;
+      background: #050505;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .25s, transform .25s;
+    }
+
+    .submit-button:hover {
+      background: #333;
+      transform: translateY(-3px);
+    }
+
+    .submit-button span {
+      margin-left: 7px;
+    }
+
+    .form-message {
+      display: none;
+      margin-top: 18px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* FOOTER */
+
+    .footer {
+      margin-top: 35px;
+      padding-top: 22px;
+      border-top: 1px solid #999;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .email-label {
+      font-size: 13px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .email-address {
+      font-size: clamp(19px, 3vw, 34px);
+      font-weight: 800;
+      letter-spacing: -1.4px;
+      overflow-wrap: anywhere;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding-bottom: 6px;
+      flex-shrink: 0;
+    }
+
+    .facebook-link {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border: 1px solid #111;
+      border-radius: 50%;
+      color: #111;
+      transition: background-color .25s, color .25s, transform .25s;
+    }
+
+    .facebook-link:hover,
+    .facebook-link:focus-visible {
+      background: #111;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .facebook-link:focus-visible {
+      outline: 2px solid #111;
+      outline-offset: 3px;
+    }
+
+    .facebook-link svg {
+      width: 19px;
+      height: 19px;
+      fill: currentColor;
+    }
+
+    .footer-divider {
+      height: 38px;
+      width: 1px;
+      background: #999;
+    }
+
+    .privacy-footer {
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .privacy-footer:hover {
+      text-decoration: underline;
+    }
+
+    /* RESPONSIVE */
+
+    @media (min-width: 1500px) {
+      .page {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+    }
+
+    @media (max-width: 1000px) {
+      .sidebar {
+        width: 100px;
+        padding: 30px 15px;
+      }
+
+      .page {
+        margin-left: 100px;
+        padding: 40px 4%;
+      }
+
+      .hero-title {
+        font-size: clamp(65px, 11vw, 110px);
+      }
+
+      .content-grid {
+        gap: 5%;
+      }
+
+      .office-info {
+        padding-top: 55px;
+      }
+
+      .submit-arrow {
+        width: 55px;
+      }
+
+      .submit-row {
+        gap: 12px;
+      }
+
+      .footer {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 18px 22px;
+        border-right: none;
+        border-bottom: 1px solid #e5e5e5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .back-button {
+        width: 40px;
+        height: 40px;
+      }
+
+      .side-links {
+        margin: 0;
+        flex-direction: row;
+        gap: 20px;
+      }
+
+      .side-links a {
+        padding-left: 0;
+        font-size: 12px;
+      }
+
+      .side-links a::after {
+        display: none;
+      }
+
+      .side-links a.active::before {
+        display: none;
+      }
+
+      .page {
+        margin-left: 0;
+        padding: 32px 22px 24px;
+      }
+
+      .hero-title {
+        font-size: clamp(56px, 12.7vw, 82px);
+        letter-spacing: -.085em;
+        white-space: normal;
+        margin: 20px 0 38px;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .office-info {
+        padding-top: 0;
+        order: 2;
+      }
+
+      .contact-form {
+        order: 1;
+      }
+
+      .office-time {
+        font-size: 27px;
+      }
+
+      .name-grid {
+        gap: 18px;
+      }
+
+      .field {
+        margin-bottom: 25px;
+      }
+
+      .submit-arrow {
+        width: 55px;
+      }
+
+      .submit-button {
+        min-width: 140px;
+      }
+
+      .footer {
+        margin-top: 40px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .email-address {
+        font-size: clamp(19px, 5.3vw, 28px);
+      }
+
+      .footer-right {
+        align-self: flex-end;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <button class="back-button" type="button"
+      aria-label="Go back" onclick="history.back()">
+      ←
+    </button>
+
+    <nav class="side-links" aria-label="Main navigation">
+      <a href="#work">WORK</a>
+      <a href="#contact" class="active">CONTACT</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="page" id="contact">
+
+    <h1 class="hero-title">Contact me</h1>
+
+    <div class="content-grid">
+
+      <!-- OFFICE HOURS -->
+      <section class="office-info">
+        <span class="small-label">OFFICE HOURS</span>
+
+        <p class="office-time">
+          Monday - Friday<br>
+          11 AM - 7 PM
+        </p>
+
+        <div class="office-divider"></div>
+      </section>
+
+      <!-- CONTACT FORM -->
+      <section>
+        <form class="contact-form" id="contactForm">
+
+          <div class="field">
+            <span class="field-title">Name (required)</span>
+
+            <div class="name-grid">
+              <div>
+                <label for="firstName">First Name</label>
+                <input id="firstName" name="firstName"
+                  type="text" placeholder="John" required>
+              </div>
+
+              <div>
+                <label for="lastName">Last Name</label>
+                <input id="lastName" name="lastName"
+                  type="text" placeholder="Doe" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="service">Service</label>
+
+            <select id="service" name="service" required>
+              <option value="" disabled selected>Select a service</option>
+              <option value="Web Design">commerical ads</option>
+              <option value="Web Development">motion graphics</option>
+              <option value="UI/UX Design">youtube videos</option>
+              <option value="Branding">color grading</option>
+              <option value="SEO">reel</option>
+              <option value="Social Media Marketing">logo animation</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="email">Email (required)</label>
+            <input id="email" name="email" type="email"
+              placeholder="you@example.com" required>
+          </div>
+
+          <div class="field">
+            <label for="description">Project description</label>
+            <textarea id="description" name="description"
+              placeholder="Tell me about your project..." required></textarea>
+          </div>
+
+          <div class="consent-options">
+            <label class="radio-option" for="privacy">
+              <input type="radio" id="privacy" name="consent"
+                value="privacy" required>
+              <span>
+                I read and agree to the
+                <a href="#privacy-policy" class="privacy-link">
+                  Privacy Policy
+                </a>
+              </span>
+            </label>
+
+          </div>
+
+          <!-- SUBMIT BUTTON WITH CURVED ARROW -->
+          <div class="submit-row">
+
+            <svg class="submit-arrow" viewBox="0 0 100 60"
+              fill="none" aria-hidden="true">
+              <path d="M5 8 C12 30, 38 39, 77 45"
+                stroke="black" stroke-width="3.2"
+                stroke-linecap="round"/>
+              <path d="M65 33 L79 46 L64 54"
+                stroke="black" stroke-width="3.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+            </svg>
+
+            <button class="submit-button" type="submit">
+              Submit <span>→</span>
+            </button>
+
+          </div>
+
+          <p class="form-message" id="formMessage" role="status"></p>
+
+        </form>
+      </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="privacy-policy">
+
+      <div class="footer-email">
+        <span class="email-label">EMAIL</span>
+        <a class="email-address"
+          href="mailto:naushadshaikh94626@gmail.com">
+          naushadshaikh94626@gmail.com
+        </a>
+      </div>
+
+      <div class="footer-right">
+        <a class="facebook-link"
+          href="https://www.facebook.com/profile.php?id=61589154249247"
+          target="_blank" rel="noopener noreferrer" aria-label="Visit us on Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M13.5 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.6 1.6-1.6h1.7V3.5c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.6V13h2.7v8h3.2z"/>
+          </svg>
+        </a>
+        <span class="footer-divider"></span>
+        <a class="privacy-footer" href="#privacy-policy">
+          Privacy Policy
+        </a>
+      </div>
+
+    </footer>
+
+  </main>
+
+  <script>
+    const form = document.getElementById("contactForm");
+    const message = document.getElementById("formMessage");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      if (!form.reportValidity()) return;
+
+      const privacyAccepted =
+        document.getElementById("privacy").checked;
+
+      if (!privacyAccepted) {
+        message.style.display = "block";
+        message.style.color = "#b00020";
+        message.textContent =
+          "Please select the Privacy Policy option before submitting.";
+        document.getElementById("privacy").focus();
+        return;
+      }
+
+      const data = {
+        firstName: form.firstName.value.trim(),
+        lastName: form.lastName.value.trim(),
+        service: form.service.value,
+        email: form.email.value.trim(),
+        description: form.description.value.trim()
+      };
+
+      message.style.display = "block";
+      message.style.color = "#111";
+      message.textContent =
+        "Opening your email app with the message filled in. Review it and press Send to submit.";
+
+      const subject = `Project inquiry: ${data.service}`;
+      const body = [
+        `Name: ${data.firstName} ${data.lastName}`,
+        `Email: ${data.email}`,
+        `Service: ${data.service}`,
+        "",
+        "Project description:",
+        data.description
+      ].join("\n");
+      const mailto = `mailto:naushadshaikh94626@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      window.location.href = mailto;
+    });
+  </script>
+
+</body>
+</html>
+
